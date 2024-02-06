@@ -18,14 +18,14 @@ namespace {
         TString::Format("%s/data/endcap_orientation_data_CMSSW_12_2_0_pre2.txt", trackLooperDir().Data()).Data());
     TString tilted_geom = get_absolute_path_after_check_file_exists(
         TString::Format("%s/data/tilted_orientation_data_CMSSW_12_2_0_pre2.txt", trackLooperDir().Data()).Data());
-    SDL::endcapGeometry->load(endcap_geom.Data());  // centroid values added to the map
-    SDL::tiltedGeometry.load(tilted_geom.Data());
+    SDL::globals::endcapGeometry->load(endcap_geom.Data());  // centroid values added to the map
+    SDL::globals::tiltedGeometry.load(tilted_geom.Data());
 
     // Module connection map (for line segment building)
     TString mappath = get_absolute_path_after_check_file_exists(
         TString::Format("%s/data/module_connection_tracing_CMSSW_12_2_0_pre2_merged.txt", trackLooperDir().Data())
             .Data());
-    SDL::moduleConnectionMap.load(mappath.Data());
+    SDL::globals::moduleConnectionMap.load(mappath.Data());
 
     TString pLSMapDir = trackLooperDir() + "/data/pixelmaps_CMSSW_12_2_0_pre2_0p8minPt/pLS_map";
     const std::array<std::string, 4> connects{

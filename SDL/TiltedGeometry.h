@@ -25,7 +25,9 @@ namespace SDL {
     float getSlope(unsigned int detid);
   };
 
-  extern TiltedGeometry tiltedGeometry;
+  namespace globals {
+    extern TiltedGeometry tiltedGeometry;
+  }
 }  // namespace SDL
 
 #endif
