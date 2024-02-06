@@ -56,7 +56,7 @@ void SDL::LST::loadAndFillES(alpaka::QueueCpuBlocking& queue, struct modulesBuff
   TString path = get_absolute_path_after_check_file_exists(
       TString::Format("%s/data/centroid_CMSSW_12_2_0_pre2.txt", trackLooperDir().Data()).Data());
   SDL::loadModulesFromFile(
-      modules, SDL::nModules, SDL::nLowerModules, *SDL::pixelMapping, queue, path.Data(), pLStoLayer);
+       modules, SDL::globals::nModules, SDL::globals::nLowerModules, *SDL::pixelMapping, queue, path.Data(), pLStoLayer);
 }
 
 void SDL::LST::prepareInput(const std::vector<float> see_px,
