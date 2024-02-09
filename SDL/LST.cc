@@ -55,6 +55,12 @@ void SDL::LST::loadAndFillES(alpaka::QueueCpuBlocking& queue, struct modulesBuff
 
   TString path = get_absolute_path_after_check_file_exists(
       TString::Format("%s/data/centroid_CMSSW_12_2_0_pre2.txt", trackLooperDir().Data()).Data());
+  if (SDL::globals::modulesBuffers == nullptr) {
+    SDL::globals::modulesBuffers = new SDL::modulesBuffer<SDL::Dev>(SDL::devAcc);
+  }
+  if (SDL::globals::pixelMapping == nullptr) {
+    SDL::globals::pixelMapping = std::make_shared<SDL::pixelMap>();
+  }
   SDL::loadModulesFromFile(modules,
                            SDL::globals::nModules,
                            SDL::globals::nLowerModules,
