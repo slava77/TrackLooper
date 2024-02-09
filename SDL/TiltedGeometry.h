@@ -15,9 +15,9 @@ namespace SDL {
     std::map<unsigned int, float> slopes_;
 
   public:
-    TiltedGeometry();
+    TiltedGeometry() = default;
     TiltedGeometry(std::string filename);
-    ~TiltedGeometry();
+    ~TiltedGeometry() = default;
 
     void load(std::string);
 
