@@ -8,8 +8,11 @@
 #include <sstream>
 #include <string>
 
+#include "Constants.h"
+
 namespace SDL {
-  class TiltedGeometry {
+  template<typename> class TiltedGeometry;
+  template<> class TiltedGeometry<SDL::Dev> {
   private:
     std::map<unsigned int, float> drdzs_;
     std::map<unsigned int, float> slopes_;
@@ -25,9 +28,6 @@ namespace SDL {
     float getSlope(unsigned int detid);
   };
 
-  namespace globals {
-    extern TiltedGeometry tiltedGeometry;
-  }
 }  // namespace SDL
 
 #endif

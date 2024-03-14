@@ -1,27 +1,16 @@
 #include "EndcapGeometry.h"
 
-SDL::EndcapGeometry* SDL::globals::endcapGeometry = new SDL::EndcapGeometry();
-
-void SDL::freeEndcap() {
-  if (SDL::globals::endcapGeometry != nullptr) {
-    delete SDL::globals::endcapGeometry;
-    SDL::globals::endcapGeometry = nullptr;
-  }
-}
-
-SDL::EndcapGeometry::EndcapGeometry(unsigned int sizef)
+SDL::EndcapGeometry<SDL::Dev>::EndcapGeometry(unsigned int sizef)
     : geoMapDetId_buf(allocBufWrapper<unsigned int>(devAcc, sizef)),
       geoMapPhi_buf(allocBufWrapper<float>(devAcc, sizef)) {}
 
-SDL::EndcapGeometry::EndcapGeometry(std::string filename, unsigned int sizef)
+SDL::EndcapGeometry<SDL::Dev>::EndcapGeometry(std::string filename, unsigned int sizef)
     : geoMapDetId_buf(allocBufWrapper<unsigned int>(devAcc, sizef)),
       geoMapPhi_buf(allocBufWrapper<float>(devAcc, sizef)) {
   load(filename);
 }
 
-SDL::EndcapGeometry::~EndcapGeometry() {}
-
-void SDL::EndcapGeometry::load(std::string filename) {
+void SDL::EndcapGeometry<SDL::Dev>::load(std::string filename) {
   avgr2s_.clear();
   yls_.clear();
   sls_.clear();
@@ -50,7 +39,8 @@ void SDL::EndcapGeometry::load(std::string filename) {
 
     ss >> detid >> avgr2 >> yl >> sl >> yh >> sh >> cr >> cp >> cz;
 
-    // std::cout <<  " detid: " << detid <<  " avgr2: " << avgr2 <<  " yl: " << yl <<  " sl: " << sl <<  " yh: " << yh <<  " sh: " << sh <<  std::endl;
+    //    std::cout <<  " detid: " << detid <<  " avgr2: " << avgr2 <<  " yl: " << yl <<  " sl: " << sl <<  " yh: " << yh <<  " sh: " << sh
+    //              <<" cr: "<< cr << " cp "<<cp << " cz "<< cz<<  std::endl;
 
     avgr2s_[detid] = avgr2;
     yls_[detid] = yl;
@@ -65,7 +55,7 @@ void SDL::EndcapGeometry::load(std::string filename) {
   fillGeoMapArraysExplicit();
 }
 
-void SDL::EndcapGeometry::fillGeoMapArraysExplicit() {
+void SDL::EndcapGeometry<SDL::Dev>::fillGeoMapArraysExplicit() {
   QueueAcc queue(devAcc);
 
   int phi_size = centroid_phis_.size();
@@ -103,18 +93,18 @@ void SDL::EndcapGeometry::fillGeoMapArraysExplicit() {
   alpaka::wait(queue);
 }
 
-float SDL::EndcapGeometry::getAverageR2(unsigned int detid) { return avgr2s_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getAverageR2(unsigned int detid) { return avgr2s_[detid]; }
 
-float SDL::EndcapGeometry::getYInterceptLower(unsigned int detid) { return yls_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getYInterceptLower(unsigned int detid) { return yls_[detid]; }
 
-float SDL::EndcapGeometry::getSlopeLower(unsigned int detid) { return sls_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getSlopeLower(unsigned int detid) { return sls_[detid]; }
 
-float SDL::EndcapGeometry::getYInterceptUpper(unsigned int detid) { return yus_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getYInterceptUpper(unsigned int detid) { return yus_[detid]; }
 
-float SDL::EndcapGeometry::getSlopeUpper(unsigned int detid) { return sus_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getSlopeUpper(unsigned int detid) { return sus_[detid]; }
 
-float SDL::EndcapGeometry::getCentroidR(unsigned int detid) { return centroid_rs_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getCentroidR(unsigned int detid) { return centroid_rs_[detid]; }
 
-float SDL::EndcapGeometry::getCentroidPhi(unsigned int detid) { return centroid_phis_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getCentroidPhi(unsigned int detid) { return centroid_phis_[detid]; }
 
-float SDL::EndcapGeometry::getCentroidZ(unsigned int detid) { return centroid_zs_[detid]; }
+float SDL::EndcapGeometry<SDL::Dev>::getCentroidZ(unsigned int detid) { return centroid_zs_[detid]; }
